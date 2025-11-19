@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NeoFlame0</title>
+<style>
+  body {font-family: Arial, sans-serif; background:#121212; color:#eee; margin:0;}
+  header {display:flex; justify-content:space-between; align-items:center; background:#1e1e1e; padding:15px;}
+  nav button {margin-left:10px; padding:10px 15px; border:none; background:#333; color:#eee; cursor:pointer;}
+  main {padding:20px;}
+  #loginScreen {display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh;}
+  #loginScreen input, #loginScreen button {margin:10px 0; padding:10px; border:none; border-radius:4px;}
+  .chat-box {height:300px; background:#222; overflow-y:auto; padding:10px; margin-bottom:10px;}
+  input[type=text]{padding:8px; border:none; border-radius:3px;}
+  ul{list-style:none; padding:0;}
+  ul li{margin:5px 0;}
+</style>
+</head>
+<body>
+<div id="loginScreen">
+  <h1>Welcome</h1>
+  <input type="text" id="usernameInput" placeholder="Enter your name" />
+  <button onclick="login()">Sign In</button>
+</div>
+
+<div id="mainApp" style="display:none;">
+  <header>
+    <h1>NeoFlame0</h1>
+    <nav>
+      <button onclick="show('apps')">Apps</button>
+      <button onclick="show('games')">Games</button>
+      <button onclick="show('links')">Links</button>
+      <button onclick="show('etc')">Etc</button>
+      <button onclick="show('chat')">Community Chat</button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="apps" style="display:none;">
+      <h2>Apps</h2>
+      <ul>
+        <li><a href="#">Example App</a></li>
+      </ul>
+    </section>
+    <section id="games" style="display:none;">
+      <h2>Games</h2>
+      <ul>
+        <li><a href="#">Example Game</a></li>
+      </ul>
+    </section>
+    <section id="links" style="display:none;">
+      <h2>Links</h2>
+      <ul>
+        <li><a href="#">Example Link</a></li>
+      </ul>
+    </section>
+    <section id="etc" style="display:none;">
+      <h2>Etc</h2>
+      <ul>
+        <li><a href="#">Example Item</a></li>
+      </ul>
+    </section>
+    <section id="chat" style="display:none;">
+      <h2>Community Chat</h2>
+      <div id="chatBox" class="chat-box"></div>
+      <input type="text" id="chatInput" placeholder="Type message" />
+      <button onclick="send()">Send</button>
+    </section>
+  </main>
+</div>
+
+<script>
+let username = "";
+function login(){
+  const name=document.getElementById("usernameInput").value.trim();
+  if(!name){alert("Enter a name");return;}
+  username=name;
+  document.getElementById("loginScreen").style.display="none";
+  document.getElementById("mainApp").style.display="block";
+  show("apps");
+}
+function show(id){
+  document.querySelectorAll("main section").forEach(s=>s.style.display="none");
+  document.getElementById(id).style.display="block";
+}
+function send(){
+  const input=document.getElementById("chatInput");
+  const msg=input.value.trim();
+  if(!msg)return;
+  const p=document.createElement("p");
+  p.textContent=`${username}: ${msg}`;
+  document.getElementById("chatBox").appendChild(p);
+  input.value="";
+  const box=document.getElementById("chatBox");
+  box.scrollTop=box.scrollHeight;
+}
+</script>
+</body>
+</html>
